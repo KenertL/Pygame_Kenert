@@ -1,0 +1,40 @@
+import pygame
+import sys
+
+AKNA_LAIUS = 640
+AKNA_KÕRGUS = 480
+AKNA_PEALkiri = "Ülesanne 2: Kenert Linde PyGame mäng"
+
+# Aken
+pygame.init()
+aken = pygame.display.set_mode((AKNA_LAIUS, AKNA_KÕRGUS))
+pygame.display.set_caption(AKNA_PEALkiri)
+
+taustapilt = pygame.image.load("bg_shop.jpg")
+poemüüja_pilt = pygame.image.load("seller.png")
+jutumulli_pilt = pygame.image.load("chat.png")
+
+# Muuda piltide suurust
+poemüüja_pilt = pygame.transform.scale(poemüüja_pilt, (280, 350))  # 50x50 suuruseks
+jutumulli_pilt = pygame.transform.scale(jutumulli_pilt, (250, 150))  # 100x100 suuruseks
+
+aken.blit(taustapilt, (0, 0))
+aken.blit(poemüüja_pilt, (100, 100))
+aken.blit(jutumulli_pilt, (250, 75))
+
+font = pygame.font.SysFont("Times New Roman", 20)
+tekst = font.render("Tere olen, Kenert Linde", True, (255, 255, 255))
+
+aken.blit(tekst, (270, 125))
+
+while True:
+    # Sündmuste töötlemine
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    # Mängu loogika
+
+    # Ekraani värskendamine
+    pygame.display.update()
