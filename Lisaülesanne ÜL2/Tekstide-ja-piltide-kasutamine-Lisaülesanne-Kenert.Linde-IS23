@@ -1,0 +1,61 @@
+import pygame
+import sys
+
+AKNA_LAIUS = 640
+AKNA_KÕRGUS = 480
+AKNA_PEALkiri = "Ülesanne 2: Kenert Linde PyGame mäng"
+
+# Aken
+pygame.init()
+aken = pygame.display.set_mode((AKNA_LAIUS, AKNA_KÕRGUS))
+pygame.display.set_caption(AKNA_PEALkiri)
+
+taustapilt = pygame.image.load("bg_shop.jpg")
+poemüüja_pilt = pygame.image.load("seller.png")
+jutumulli_pilt = pygame.image.load("chat.png")
+
+# Muuda piltide suurust
+poemüüja_pilt = pygame.transform.scale(poemüüja_pilt, (280, 350))  # 50x50 suuruseks
+jutumulli_pilt = pygame.transform.scale(jutumulli_pilt, (250, 150))  # 100x100 suuruseks
+
+aken.blit(taustapilt, (0, 0))
+aken.blit(poemüüja_pilt, (100, 100))
+aken.blit(jutumulli_pilt, (250, 75))
+
+font = pygame.font.SysFont("Times New Roman", 20)
+tekst = font.render("Tere olen, Kenert Linde", True, (255, 255, 255))
+
+aken.blit(tekst, (270, 125))
+
+# 1. Lisa vasakusse nurka "VIKK logo" - logo
+vik100_pilt = pygame.image.load("VIKK logo.png")
+vik100_pilt = pygame.transform.scale(vik100_pilt, (200, 50))  # Kohanda suurust vastavalt vajadusele
+aken.blit(vik100_pilt, (10, 10))
+
+# 1.1. Lisa kaarega tekst "TULEVIK 2050" (logo külg)
+font = pygame.font.SysFont("Arial", 20, bold=True, italic=True)
+tekst = font.render("TULEVIK 2050", True, (255, 255, 255))
+aken.blit(tekst, (10, 60))  # Kohanda asukohta ja nurka vastavalt vajadusele
+
+# 2. Lisa laua peale tort, .png pilt vali ise Google´st
+tort_pilt = pygame.image.load("tort.png")  # Asenda "tort.png" oma valitud pildiga
+tort_pilt = pygame.transform.scale(tort_pilt, (100, 100))  # Kohanda suurust vastavalt vajadusele
+aken.blit(tort_pilt, (400, 200))  # Kohanda asukohta vastavalt vajadusele
+
+# 3. Lisa seinale mõõk, .png fail olemas manuses
+mõõk_pilt = pygame.image.load("Mõõk.png")  # Asenda "mõõk.png" oma valitud pildiga
+mõõk_pilt = pygame.transform.scale(mõõk_pilt, (100, 200))  # Kohanda suurust vastavalt vajadusele
+aken.blit(mõõk_pilt, (550, 100))  # Kohanda asukohta vastavalt vajadusele
+
+
+while True:
+    # Sündmuste töötlemine
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    # Mängu loogika
+
+    # Ekraani värskendamine
+    pygame.display.update()
