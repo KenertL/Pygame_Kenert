@@ -39,11 +39,13 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT] and paddle_rect.left > 0:
-        paddle_rect.x -= paddle_speed
-    if keys[pygame.K_RIGHT] and paddle_rect.right < WIDTH:
+    # Aluse automaatne liigutamine
+    if paddle_rect.right < WIDTH and paddle_speed > 0:
         paddle_rect.x += paddle_speed
+    elif paddle_rect.left > 0 and paddle_speed < 0:
+        paddle_rect.x += paddle_speed
+    else:
+        paddle_speed *= -1
 
     ball_rect.x += ball_speed[0]
     ball_rect.y += ball_speed[1]
