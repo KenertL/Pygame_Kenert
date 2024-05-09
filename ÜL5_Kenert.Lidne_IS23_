@@ -1,0 +1,75 @@
+import pygame
+import sys
+
+# Mängu algseadistus
+pygame.init()
+WIDTH, HEIGHT = 640, 480
+BG_COLOR = (173, 216, 230)  # Helesinine
+FPS = 60
+
+# Laadi pildid
+ball_img = pygame.image.load("ball.png")
+ball_img = pygame.transform.scale(ball_img, (20, 20))
+paddle_img = pygame.image.load("pad.png")
+paddle_img = pygame.transform.scale(paddle_img, (120, 20))
+
+# Ekraan
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Lihtne mäng")
+clock = pygame.time.Clock()
+
+# Palli omadused
+ball_rect = ball_img.get_rect(center=(WIDTH // 2, HEIGHT - 30))
+ball_speed = [5, -5]
+
+# Aluse omadused
+paddle_rect = paddle_img.get_rect(midbottom=(WIDTH // 2, HEIGHT - 50))
+paddle_speed = 7
+
+# Tulemus
+score = 0
+font = pygame.font.SysFont(None, 30)
+
+# Peamise mänguloop
+running = True
+while running:
+    screen.fill(BG_COLOR)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and paddle_rect.left > 0:
+        paddle_rect.x -= paddle_speed
+    if keys[pygame.K_RIGHT] and paddle_rect.right < WIDTH:
+        paddle_rect.x += paddle_speed
+
+    ball_rect.x += ball_speed[0]
+    ball_rect.y += ball_speed[1]
+
+    if ball_rect.left <= 0 or ball_rect.right >= WIDTH:
+        ball_speed[0] *= -1
+    if ball_rect.top <= 0:
+        ball_speed[1] *= -1
+
+    if ball_rect.colliderect(paddle_rect) and ball_speed[1] > 0:
+        ball_speed[1] *= -1
+        score += 1
+
+    if ball_rect.bottom >= HEIGHT:
+        score -= 1
+        ball_rect.center = (WIDTH // 2, HEIGHT - 30)
+        ball_speed = [2, -2]
+
+    screen.blit(ball_img, ball_rect)
+    screen.blit(paddle_img, paddle_rect)
+
+    score_text = font.render("Score: " + str(score), True, (0, 0, 0))
+    screen.blit(score_text, (10, 10))
+
+    pygame.display.flip()
+    clock.tick(FPS)
+
+pygame.quit()
+sys.exit()
